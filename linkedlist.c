@@ -18,7 +18,6 @@ struct Node *createNode(int data) {
 
 void insertAtFront(int data) {
     struct Node *newnode = createNode(data);
-
     if (header == NULL) {
         header = newnode;
     } else {
@@ -29,7 +28,6 @@ void insertAtFront(int data) {
 
 void insertAtEnd(int data) {
     struct Node *newnode = createNode(data);
-
     if (header == NULL) {
         header = newnode;
     } else {
@@ -63,7 +61,38 @@ void insertAtAny(int data, int position) {
     }
 }
 
-void deleteAtAny
+void deleteAtFront() {
+    if (header == NULL) {
+        printf("List is empty, nothing to delete.\n");
+        return;
+    }
+    
+    struct Node *temp = header;
+    header = header->link;
+    free(temp);
+    printf("Node deleted from the front.\n");
+}
+
+void deleteAtEnd() {
+    if (header == NULL) {
+        printf("List is empty, nothing to delete.\n");
+        return;
+    }
+    
+    if (header->link == NULL) {
+        free(header);
+        header = NULL;
+    } else {
+        struct Node *current = header;
+        while (current->link->link != NULL) {
+            current = current->link;
+        }
+        free(current->link);
+        current->link = NULL;
+    }
+    printf("Node deleted from the end.\n");
+}
+
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -74,28 +103,61 @@ void traversal() {
 }
 
 int main() {
-    int position, data;
+    int choice, data, position;
 
-    insertAtFront(100);
-    insertAtFront(200);
-    insertAtFront(300);
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Insert at Front\n");
+        printf("2. Insert at End\n");
+        printf("3. Insert at Any Position\n");
+        printf("4. Delete at Front\n");
+        printf("5. Delete at End\n");
+        printf("6. Display List\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    insertAtEnd(400);
-    insertAtEnd(500);
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert at front: ");
+                scanf("%d", &data);
+                insertAtFront(data);
+                break;
 
-    printf("List before insertion at any position:\n");
-    traversal();
+            case 2:
+                printf("Enter data to insert at end: ");
+                scanf("%d", &data);
+                insertAtEnd(data);
+                break;
 
-    printf("Enter the position to insert: ");
-    scanf("%d", &position);
+            case 3:
+                printf("Enter the position to insert: ");
+                scanf("%d", &position);
+                printf("Enter the data to insert: ");
+                scanf("%d", &data);
+                insertAtAny(data, position);
+                break;
 
-    printf("Enter the data to insert: ");
-    scanf("%d", &data);
-    
-    insertAtAny(data, position);
+            case 4:
+                deleteAtFront();
+                break;
 
-    printf("List after insertion at specified position:\n");
-    traversal();
+            case 5:
+                deleteAtEnd();
+                break;
+
+            case 6:
+                printf("Current List: ");
+                traversal();
+                break;
+
+            case 7:
+                exit(0);
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
 
     return 0;
 }
