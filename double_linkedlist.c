@@ -29,7 +29,22 @@ void insertAtFront(int data) {
     }
 }
 
-void printList() {
+void insertAtEnd(int data) {
+    struct Node *new_node = createNode(data);
+
+    if (header == NULL) {
+        header = new_node;
+    } else {
+        struct Node *temp = header;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = new_node;
+        new_node->prev = temp;
+    }
+}
+
+void traversal() {
     struct Node *temp = header;
     while (temp != NULL) {
         printf("%d ", temp->data);
@@ -41,8 +56,9 @@ void printList() {
 int main() {
     insertAtFront(10);
     insertAtFront(20);
-
-    printList();
+    insertAtEnd(30);
+    insertAtEnd(500);
+    traversal();
 
     return 0;
 }
