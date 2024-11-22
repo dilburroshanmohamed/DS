@@ -4,11 +4,10 @@ struct Node {
     int data;
     struct Node* left; 
     struct Node* right;  
-} Node;
-
-Node* header = NULL;
-Node* createNode(int data) {
-    Node* newNode = (Node*) malloc(sizeof(Node));
+};
+struct Node* header = NULL;
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
     if (!newNode) {
         printf("Memory allocation failed\n");
         exit(1);
@@ -16,10 +15,11 @@ Node* createNode(int data) {
     newNode->data = data;
     newNode->left = NULL;
     newNode->right = NULL;
+    
     return newNode;
 }
 void insertAtFront(int data) {
-    Node* newNode = createNode(data);
+    struct Node* newNode = createNode(data);
     if (header == NULL) {
         header = newNode;
     } else {
@@ -29,7 +29,7 @@ void insertAtFront(int data) {
     }
 }
 void printList() {
-    Node* temp = header;
+    struct Node* temp = header;
     while (temp != NULL) {
         printf("%d ", temp->data);
         temp = temp->right;
@@ -37,6 +37,7 @@ void printList() {
     
     printf("\n");
 }
+
 int main() {
     insertAtFront(10);
     insertAtFront(20);
