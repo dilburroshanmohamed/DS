@@ -1,49 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct Node {
     int data;
-    struct Node* left; 
-    struct Node* right;  
+    struct Node* next;
+    struct Node* prev;
 };
-struct Node* header = NULL;
-struct Node* createNode(int data) {
-    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
-    if (!newNode) {
-        printf("Memory allocation failed\n");
-        exit(1);
-    }
-    newNode->data = data;
-    newNode->left = NULL;
-    newNode->right = NULL;
-    
-    return newNode;
+
+struct Node *header = NULL;
+
+struct Node *createNode(int data) {
+    struct Node *new_node = (struct Node *) malloc(sizeof(struct Node));
+    new_node->data = data;
+    new_node->next = NULL;
+    new_node->prev = NULL;
+    return new_node;
 }
+
 void insertAtFront(int data) {
-    struct Node* newNode = createNode(data);
+    struct Node *new_node = createNode(data);
+
     if (header == NULL) {
-        header = newNode;
+        header = new_node;
     } else {
-        newNode->right = header;
-        header->left = newNode;
-        header = newNode;
+        new_node->next = header;
+        header->prev = new_node;
+        header = new_node;
     }
 }
+
 void printList() {
-    struct Node* temp = header;
+    struct Node *temp = header;
     while (temp != NULL) {
         printf("%d ", temp->data);
-        temp = temp->right;
+        temp = temp->next;
     }
-    
     printf("\n");
 }
 
 int main() {
     insertAtFront(10);
     insertAtFront(20);
-    insertAtFront(30);
-    printf("Doubly Linked List: ");
+
     printList();
-    
+
     return 0;
 }
